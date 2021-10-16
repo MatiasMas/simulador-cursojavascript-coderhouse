@@ -178,12 +178,14 @@ class Inventario {
     }
 
     // Metodo para ordenar los productos por precio ascendente o descendente.
-    ordenarProductosPorPrecioAscendente(tipoOrden) {
+    ordenarProductosPorPrecio(tipoOrden) {
         if (tipoOrden == 'asc') {
-            this.productos.sort((a, b) => a - b);
+            this.productos.sort((a, b) => a.precio - b.precio);
         } else if (tipoOrden == 'desc') {
-            this.productos.sort((a, b) => a - b);
+            this.productos.sort((a, b) => a.precio - b.precio);
             this.productos.reverse();
+        } else {
+            throw new Error(`No es posible ordenar por ${tipoOrden}.`);
         }
     }
 }
@@ -193,13 +195,20 @@ class Inventario {
 // Sección para probar
 
 let nombreProducto = prompt("Ingrese nombre de su producto.");
-let precioProducto = prompt("Ingrese precio de su producto.");
+let precioProducto = parseFloat(prompt("Ingrese precio de su producto."));
 let cantidadCuotas = parseInt(prompt("Ingrese la cantidad de cuotas."));
 let fechaVencimientoCuota = new Date(2021, parseInt(prompt("Ingrese mes de vencimiento con un numero") - 1), parseInt(prompt("Ingrese dia de vencimiento con un numero")));
 
 const inventario = new Inventario(parseInt(prompt("Ingrese el limite mensual de su tarjeta.")));
 
 inventario.agregarProducto(new Producto(nombreProducto, precioProducto, cantidadCuotas, fechaVencimientoCuota));
+inventario.agregarProducto(new Producto(nombreProducto + '2', precioProducto - 100, cantidadCuotas -10, fechaVencimientoCuota));
+inventario.agregarProducto(new Producto(nombreProducto + '3', precioProducto + 5000, cantidadCuotas - 2, fechaVencimientoCuota));
+
+inventario.borrarProducto(nombreProducto);
+
+inventario.ordenarProductosPorPrecio("desc");
+
 console.log(inventario.getProductos());
 
 // Sección para probar
