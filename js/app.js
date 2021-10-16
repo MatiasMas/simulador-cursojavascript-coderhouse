@@ -177,15 +177,14 @@ class Inventario {
         }
     }
 
-    // Metodo para ordenar los productos por precio ascendente.
-    ordenarProductosPorPrecioAscendente() {
-        this.productos.sort((a, b) => a - b);
-    }
-
-    // Metodo para ordenar los productos por precio descendente.
-    ordenarProductosPorPrecioDescendente() {
-        this.productos.sort((a, b) => a - b);
-        this.productos.reverse();
+    // Metodo para ordenar los productos por precio ascendente o descendente.
+    ordenarProductosPorPrecioAscendente(tipoOrden) {
+        if (tipoOrden == 'asc') {
+            this.productos.sort((a, b) => a - b);
+        } else if (tipoOrden == 'desc') {
+            this.productos.sort((a, b) => a - b);
+            this.productos.reverse();
+        }
     }
 }
 
