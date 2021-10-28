@@ -118,6 +118,23 @@ class Inventario {
     // Crea y agrega un producto al inventario de la pagina.
     agregarProducto(producto) {
         this.productos.push(producto);
+
+        let divContainer = document.createElement('div');
+        divContainer.innerHTML = `
+        
+        <div class="product">
+            <img class="product__img" src="https://via.placeholder.com/200x150" alt="">
+            <div class="product__info">
+                <p class="product__title">${producto.getNombre()}</p>
+                <p class="product__price">Precio: ${producto.getPrecio()}</p>
+                <p class="product__monthlyFee">Monto Cuota: ${producto.calcularValorCuota()}</p>
+                <p class="product__feeNumber">Nro Cuotas: ${producto.getCantidadCuotas()}</p>
+            </div>
+        </div>
+        `
+
+        let productList = document.getElementsByClassName('home__main__products');
+        productList[0].appendChild(divContainer);
     }
 
     // Borra producto del inventario.
@@ -193,6 +210,10 @@ class Inventario {
 // Fin declaración de Clases
 
 // Sección para probar
+
+let nombreUsuario = prompt("Ingrese su nombre...");
+let title = document.getElementsByClassName("home__title");
+title[0].textContent = `Bienvenido el día de hoy, ${nombreUsuario}!`;
 
 let nombreProducto = prompt("Ingrese nombre de su producto.");
 let precioProducto = parseFloat(prompt("Ingrese precio de su producto."));

@@ -1,0 +1,35 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.home__title {
+    font-size: 50px;
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.home__main__products {
+    margin: 50px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.product {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 200px;
+    height: 250px;
+    font-size: 17px;
+    border: 2px solid rgba(0, 0, 0, 0.096);
+    border-radius: 2px;
+}
+
+.product__info {
+    padding: 5px;
+    text-transform: capitalize;
+}
+
+.product__title {
+    font-weight: bold;
+}

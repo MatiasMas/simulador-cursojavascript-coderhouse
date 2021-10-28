@@ -10,3 +10,4 @@ Change log:
 -   0.2.0 : Se implementó el uso de objetos, se utilizó Clases para ello, se añadieron sus respectivas propiedades y metodos -> Producto, Inventario.
 -   0.2.1 : Arreglando metodo que ordena los productos por precio, se unificó en un metodo para que pueda ordenar por ascendente o descendente.
 -   0.2.2 : Se volvió a iterar sobre el metodo de ordenamiento, en la función compare del sort que no funcionaba, se testeo tambien el metodo de borrado y ordenamiento para los entregables.
+-   0.3.0 : Se añadió css para manejar el html dinámico que es agregado al agregarse un producto, esto se hace usando clases.
