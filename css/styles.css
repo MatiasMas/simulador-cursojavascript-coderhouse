@@ -21,15 +21,30 @@
     width: 200px;
     height: 250px;
     font-size: 17px;
-    border: 2px solid rgba(0, 0, 0, 0.096);
     border-radius: 2px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.product__img {
+    display: inline-block;
+    height: 60%;
+    width: 100%;
 }
 
 .product__info {
-    padding: 5px;
+    padding: 7px;
     text-transform: capitalize;
+    height: 40%;
 }
 
 .product__title {
     font-weight: bold;
+}
+
+.product__close {
+    padding: 4px;
+    position: absolute;
+    right: 0;
 }

@@ -1,8 +1,11 @@
 // Comienzo declaración de Clases
 
 class Producto {
-    
+    static contadorProductos = 0;
+
+
     constructor(nombre, precio, cantidadCuotas, fechaVencimientoCuota) {
+        this.id = ++Producto.contadorProductos;
         this.nombre = nombre;
         this.precio = precio;
         this.cantidadCuotas = cantidadCuotas;
@@ -13,6 +16,10 @@ class Producto {
     }
 
     // Getters y setters.
+
+    getId() {
+        return this.id;
+    }
 
     getNombre() {
         return this.nombre.toLowerCase();
@@ -118,18 +125,21 @@ class Inventario {
     // Crea y agrega un producto al inventario de la pagina.
     agregarProducto(producto) {
         this.productos.push(producto);
+        localStorage.setItem('productos', JSON.stringify(this.productos));
 
         let divContainer = document.createElement('div');
-        divContainer.innerHTML = `
+        divContainer.id = `${producto.getId()}`;
+        divContainer.className = `product-${producto.getId()} product`;
+        divContainer.innerHTML = 
         
-        <div class="product">
-            <img class="product__img" src="https://via.placeholder.com/200x150" alt="">
-            <div class="product__info">
-                <p class="product__title">${producto.getNombre()}</p>
-                <p class="product__price">Precio: ${producto.getPrecio()}</p>
-                <p class="product__monthlyFee">Monto Cuota: ${producto.calcularValorCuota()}</p>
-                <p class="product__feeNumber">Nro Cuotas: ${producto.getCantidadCuotas()}</p>
-            </div>
+        `
+        <img class="product__img" src="images/sneakers.png" alt="product-icon">
+        <img class="product__close" src="images/cancelButton.png" alt="delete-icon">
+        <div class="product__info">
+            <p class="product__title">${producto.getNombre()}</p>
+            <p class="product__price">Precio: ${producto.getPrecio()}</p>
+            <p class="product__monthlyFee">Monto Cuota: ${producto.calcularValorCuota()}</p>
+            <p class="product__feeNumber">Nro Cuotas: ${producto.getCantidadCuotas()}</p>
         </div>
         `
 
@@ -138,21 +148,22 @@ class Inventario {
     }
 
     // Borra producto del inventario.
-    borrarProducto(nombreProducto) {
-        const producto = this.buscarProductoPorNombre(nombreProducto);
+    borrarProducto(id) {
+        const producto = this.buscarProductoPorId(id);
         let index = this.productos.indexOf(producto);
 
         this.productos.splice(index, 1);
+        localStorage.removeItem('productos');
+        localStorage.setItem('productos', JSON.stringify(this.productos));
     }
 
     // Busca un producto dentro del inventario por nombre.
-    buscarProductoPorNombre(nombre) {
-        nombre = nombre.toLowerCase();
+    buscarProductoPorId(id) {
 
-        const producto = this.productos.find(producto => producto.getNombre() === nombre);
+        const producto = this.productos.find(producto => producto.id === id);
 
         if (producto == null) {
-            throw new Error(`El producto con nombre: ${nombre} no existe en el inventario.`);
+            throw new Error(`El producto con id: ${id} no existe en el inventario.`);
         }
 
         return producto;
@@ -209,27 +220,37 @@ class Inventario {
 
 // Fin declaración de Clases
 
+// Manejo de eventos
+
+document.getElementById('add-product').addEventListener('click', () => {
+    let nombreProducto = prompt("Ingrese nombre de su producto.");
+    let precioProducto = parseFloat(prompt("Ingrese precio de su producto."));
+    let cantidadCuotas = parseInt(prompt("Ingrese la cantidad de cuotas."));
+    let fechaVencimientoCuota = new Date(2021, parseInt(prompt("Ingrese mes de vencimiento con un numero") - 1), parseInt(prompt("Ingrese dia de vencimiento con un numero")));
+
+    inventario.agregarProducto(new Producto(nombreProducto, precioProducto, cantidadCuotas, fechaVencimientoCuota));
+
+    const closeButtons = document.getElementsByClassName('product__close');
+
+    for (const closeButton of closeButtons) {
+        closeButton.addEventListener('click', () => {
+            let parentId = parseInt(closeButton.parentNode.id);
+            let elem = document.getElementById(parentId);
+            elem.parentNode.removeChild(elem);
+            inventario.borrarProducto(parentId);
+        });
+    }
+
+});
+
+// Manejo de eventos
+
 // Sección para probar
 
 let nombreUsuario = prompt("Ingrese su nombre...");
 let title = document.getElementsByClassName("home__title");
 title[0].textContent = `Bienvenido el día de hoy, ${nombreUsuario}!`;
 
-let nombreProducto = prompt("Ingrese nombre de su producto.");
-let precioProducto = parseFloat(prompt("Ingrese precio de su producto."));
-let cantidadCuotas = parseInt(prompt("Ingrese la cantidad de cuotas."));
-let fechaVencimientoCuota = new Date(2021, parseInt(prompt("Ingrese mes de vencimiento con un numero") - 1), parseInt(prompt("Ingrese dia de vencimiento con un numero")));
-
 const inventario = new Inventario(parseInt(prompt("Ingrese el limite mensual de su tarjeta.")));
-
-inventario.agregarProducto(new Producto(nombreProducto, precioProducto, cantidadCuotas, fechaVencimientoCuota));
-inventario.agregarProducto(new Producto(nombreProducto + '2', precioProducto - 100, cantidadCuotas -10, fechaVencimientoCuota));
-inventario.agregarProducto(new Producto(nombreProducto + '3', precioProducto + 5000, cantidadCuotas - 2, fechaVencimientoCuota));
-
-inventario.borrarProducto(nombreProducto);
-
-inventario.ordenarProductosPorPrecio("desc");
-
-console.log(inventario.getProductos());
 
 // Sección para probar
