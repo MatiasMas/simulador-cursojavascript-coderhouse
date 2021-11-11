@@ -1,0 +1,22 @@
+{
+  "name": "matiasmas-simulador",
+  "version": "1.0.0",
+  "description": "Final project for Coderhouse Javascript module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatiasMas/simulador-cursojavascript-coderhouse.git"
+  },
+  "author": "Matias Mas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatiasMas/simulador-cursojavascript-coderhouse/issues"
+  },
+  "homepage": "https://github.com/MatiasMas/simulador-cursojavascript-coderhouse#readme",
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
+}

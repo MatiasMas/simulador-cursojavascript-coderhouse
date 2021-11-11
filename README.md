@@ -12,3 +12,4 @@ Change log:
 -   0.2.2 : Se volvió a iterar sobre el metodo de ordenamiento, en la función compare del sort que no funcionaba, se testeo tambien el metodo de borrado y ordenamiento para los entregables.
 -   0.3.0 : Se añadió css para manejar el html dinámico que es agregado al agregarse un producto, esto se hace usando clases.
 -   0.3.1 : Uso de event listeners para añadir productos y borrado de los mismos.
+-   0.4.0 : Uso de npm para instalar jquery, se reemplazaron todos los usos de document.findElement... por notaciones Jquery.

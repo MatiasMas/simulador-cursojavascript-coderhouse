@@ -127,24 +127,20 @@ class Inventario {
         this.productos.push(producto);
         localStorage.setItem('productos', JSON.stringify(this.productos));
 
-        let divContainer = document.createElement('div');
-        divContainer.id = `${producto.getId()}`;
-        divContainer.className = `product-${producto.getId()} product`;
-        divContainer.innerHTML = 
-        
-        `
-        <img class="product__img" src="images/sneakers.png" alt="product-icon">
-        <img class="product__close" src="images/cancelButton.png" alt="delete-icon">
-        <div class="product__info">
-            <p class="product__title">${producto.getNombre()}</p>
-            <p class="product__price">Precio: ${producto.getPrecio()}</p>
-            <p class="product__monthlyFee">Monto Cuota: ${producto.calcularValorCuota()}</p>
-            <p class="product__feeNumber">Nro Cuotas: ${producto.getCantidadCuotas()}</p>
-        </div>
-        `
-
-        let productList = document.getElementsByClassName('home__main__products');
-        productList[0].appendChild(divContainer);
+        $('.home__main__products').append(
+            `
+            <div id="${producto.getId()}" class="product-${producto.getId()} product">
+                <img class="product__img" src="images/sneakers.png" alt="product-icon">
+                <img class="product__close" src="images/cancelButton.png" alt="delete-icon">
+                <div class="product__info">
+                    <p class="product__title">${producto.getNombre()}</p>
+                    <p class="product__price">Precio: ${producto.getPrecio()}</p>
+                    <p class="product__monthlyFee">Monto Cuota: ${producto.calcularValorCuota()}</p>
+                    <p class="product__feeNumber">Nro Cuotas: ${producto.getCantidadCuotas()}</p>
+                </div>
+            </div>
+            `
+        );
     }
 
     // Borra producto del inventario.
@@ -222,7 +218,7 @@ class Inventario {
 
 // Manejo de eventos
 
-document.getElementById('add-product').addEventListener('click', () => {
+$('#add-product').click(() => {
     let nombreProducto = prompt("Ingrese nombre de su producto.");
     let precioProducto = parseFloat(prompt("Ingrese precio de su producto."));
     let cantidadCuotas = parseInt(prompt("Ingrese la cantidad de cuotas."));
@@ -230,17 +226,16 @@ document.getElementById('add-product').addEventListener('click', () => {
 
     inventario.agregarProducto(new Producto(nombreProducto, precioProducto, cantidadCuotas, fechaVencimientoCuota));
 
-    const closeButtons = document.getElementsByClassName('product__close');
+    const closeButtons = $('.product__close');
 
     for (const closeButton of closeButtons) {
         closeButton.addEventListener('click', () => {
             let parentId = parseInt(closeButton.parentNode.id);
-            let elem = document.getElementById(parentId);
+            let elem = $(`#${parentId}`)[0];
             elem.parentNode.removeChild(elem);
             inventario.borrarProducto(parentId);
         });
     }
-
 });
 
 // Manejo de eventos
@@ -248,7 +243,7 @@ document.getElementById('add-product').addEventListener('click', () => {
 // Sección para probar
 
 let nombreUsuario = prompt("Ingrese su nombre...");
-let title = document.getElementsByClassName("home__title");
+let title = $(".home__title");
 title[0].textContent = `Bienvenido el día de hoy, ${nombreUsuario}!`;
 
 const inventario = new Inventario(parseInt(prompt("Ingrese el limite mensual de su tarjeta.")));
