@@ -1,18 +1,17 @@
-// Comienzo declaración de Clases
+// Classes Declaration - START
 
-class Producto {
-    static contadorProductos = 0;
+class Product {
+    static productsCounter = 0;
 
-
-    constructor(nombre, precio, cantidadCuotas, fechaVencimientoCuota) {
-        this.id = ++Producto.contadorProductos;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.cantidadCuotas = cantidadCuotas;
-        this.fechaVencimientoCuota = new Date(fechaVencimientoCuota);
-        this.cantidadCuotasPagas = 0;
-        this.pago = false;
-        this.cuotaVencida = false;
+    constructor(name, price, installmentsQuantity, installmentExpirationDate) {
+        this.id = ++Product.productsCounter;
+        this.name = name;
+        this.price = price;
+        this.installmentsQuantity = installmentsQuantity;
+        this.installmentExpirationDate = new Date(installmentExpirationDate);
+        this.paidInstallments = 0;
+        this.paid = false;
+        this.expiredInstallment = false;
     }
 
     // Getters y setters.
@@ -21,210 +20,268 @@ class Producto {
         return this.id;
     }
 
-    getNombre() {
-        return this.nombre.toLowerCase();
+    getName() {
+        return this.name.toLowerCase();
     }
 
-    setNombre(nombre) {
-        this.nombre = nombre;
+    setName(name) {
+        this.name = name;
     }
 
-    getPrecio() {
-        return this.precio;
+    getPrice() {
+        return this.price;
     }
 
-    setPrecio(precio) {
-        this.precio = precio;
+    setPrice(price) {
+        this.price = price;
     }
 
-    getCantidadCuotas() {
-        return this.cantidadCuotas;
+    getInstallmentsQuantity() {
+        return this.installmentsQuantity;
     }
 
-    setCantidadCuotas(cantidadCuotas) {
-        this.cantidadCuotas = cantidadCuotas;
+    setInstallmentsQuantity(installmentsQuantity) {
+        this.installmentsQuantity = installmentsQuantity;
     }
 
-    getCantidadCuotasPagas() {
-        return this.cantidadCuotasPagas;
+    getPaidInstallments() {
+        return this.paidInstallments;
     }
 
-    estaPago() {
-        return this.pago;
+    isPaid() {
+        return this.paid;
     }
 
-    getFechaVencimientoCuota() {
-        return this.fechaVencimientoCuota;
+    getInstallmentExpirationDate() {
+        return this.installmentExpirationDate;
     }
 
-    setFechaVencimientoCuota(fechaVencimientoCuota) {
-        this.fechaVencimientoCuota = fechaVencimientoCuota;
+    setInstallmentExpirationDate(installmentExpirationDate) {
+        this.installmentExpirationDate = installmentExpirationDate;
     }
 
-    getCuotaVencida() {
-        return this.cuotaVencida;
+    getExpiredInstallment() {
+        return this.expiredInstallment;
     }
 
-    // Suma el iva en caso de que se manejen precios de costo.
-    sumarIva(){
-        this.precio *= 1.22;
+    // Adds IVA in case that the products are managed as cost price
+    addIVA(){
+        this.price *= 1.22;
     }
 
-    // Metodo que segun un monto dado y un numero de cuotas ingresado calcula el monto de cada cuota.
-    calcularValorCuota() {
-        return (this.precio / this.cantidadCuotas).toFixed(2);
+    // Method that given certain amount and an installment number, calculate each installment amount
+    calculateInstallmentValue() {
+        return (this.price / this.installmentsQuantity).toFixed(2);
     }
 
-    // Metodo que incrementa en 1 la cantidad de cuotas pagas de un producto.
-    pagarCuota() {
-        if (cantidadCuotasPagas != cantidadCuotas) {
-            this.cantidadCuotasPagas++;
+    // Increment 1 to the product's paid installments
+    payInstallment() {
+        if (this.paidInstallments !== this.installmentsQuantity) {
+            this.paidInstallments++;
         } else {
             throw new Error("Todas las cuotas ya estan pagas.");
         }
     }
 
-    // Metodo que cambia el estado de un producto de Pagando a Pago, esto por interfaz grafica hace que el producto pase a una sección de articulos ya pagos.
-    considerarPago() {
-        this.pago = true;
-        this.fechaVencimientoCuota = null;
+    // Method that transition a product state from paying to paid, this is done through the user interface
+    transitionToPaid() {
+        this.paid = true;
+        this.installmentExpirationDate = null;
     }
 
-    // Si la fecha de vencimiento de una cuota es superada en fecha el articulo se considerará vencido y pasará a otra sección de la página.
-    considerarVencido() {
-        this.cuotaVencida = true;
+    // If an installment expiration date is met, the product transition to expired
+    transitionToExpired() {
+        this.expiredInstallment = true;
     }
 
 }
 
-class Inventario {
-    constructor(limiteTarjeta) {
-        this.productos = [];
-        this.limiteTarjeta = limiteTarjeta;
-        this.montoTotalProductos = 0;
+class Inventory {
+    constructor(creditCardLimit) {
+        this.products = [];
+        this.creditCardLimit = creditCardLimit;
+        this.productsTotalValue = 0;
     }
 
     // Getters y setters 
 
-    getProductos() {
-        return this.productos;
+    getProducts() {
+        return this.products;
     }
 
-    getLimiteTarjeta() {
-        return this.limiteTarjeta;
+    getCreditCardLimit() {
+        return this.creditCardLimit;
     }
 
-    setLimiteTarjeta(limiteTarjeta) {
-        this.limiteTarjeta = limiteTarjeta;
+    setCreditCardLimit(creditCardLimit) {
+        this.creditCardLimit = creditCardLimit;
     }
 
-    getMontoTotalProductos() {
-        return this.montoTotalProductos;
+    getProductsTotalValue() {
+        return this.productsTotalValue;
     }
     
-    // Crea y agrega un producto al inventario de la pagina.
-    agregarProducto(producto) {
-        this.productos.push(producto);
-        localStorage.setItem('productos', JSON.stringify(this.productos));
+    // Creates and add a product to the inventory
+    addProduct(product) {
+        this.products.push(product);
+        localStorage.setItem('products', JSON.stringify(this.products));
 
         $('.home__main__products').append(
             `
-            <div id="${producto.getId()}" class="product-${producto.getId()} product">
+            <div id="${product.getId()}" class="product-${product.getId()} product">
                 <img class="product__img" src="images/sneakers.png" alt="product-icon">
                 <img class="product__close" src="images/cancelButton.png" alt="delete-icon">
                 <div class="product__info">
-                    <p class="product__title">${producto.getNombre()}</p>
-                    <p class="product__price">Precio: ${producto.getPrecio()}</p>
-                    <p class="product__monthlyFee">Monto Cuota: ${producto.calcularValorCuota()}</p>
-                    <p class="product__feeNumber">Nro Cuotas: ${producto.getCantidadCuotas()}</p>
+                    <p class="product__info--title">${product.getName()}</p>
+                    <p class="product__info--price">Precio: ${product.getPrice()}</p>
+                    <p class="product__info--monthlyFee">Monto Cuota: ${product.calculateInstallmentValue()}</p>
+                    <p class="product__info--feeNumber">Nro Cuotas: ${product.getInstallmentsQuantity()}</p>
                 </div>
             </div>
             `
         );
+
+        $(`#${product.getId()}`)
+            .hide()
+            .fadeIn('slow')
+            .animate({
+                opacity: 0.5,
+                height: "+=20",
+                width: "+=20"
+            }, 1000, () => {
+                $(`#${product.getId()}`)
+                    .animate({
+                        opacity: 1,
+                        height: "-=20",
+                        width: "-=20"
+                    }, 1000, () => {})
+            });
     }
 
-    // Borra producto del inventario.
-    borrarProducto(id) {
-        const producto = this.buscarProductoPorId(id);
-        let index = this.productos.indexOf(producto);
+    // Deletes a product from the inventory
+    deleteProduct(id) {
+        const product = this.searchProductById(id);
+        let index = this.products.indexOf(product);
 
-        this.productos.splice(index, 1);
-        localStorage.removeItem('productos');
-        localStorage.setItem('productos', JSON.stringify(this.productos));
+        this.products.splice(index, 1);
+        localStorage.removeItem('products');
+        localStorage.setItem('products', JSON.stringify(this.products));
+        Product.productsCounter--;
     }
 
-    // Busca un producto dentro del inventario por nombre.
-    buscarProductoPorId(id) {
+    // Search a product by ID
+    searchProductById(id) {
 
-        const producto = this.productos.find(producto => producto.id === id);
+        const product = this.products.find(product => product.getId() === id);
 
-        if (producto == null) {
-            throw new Error(`El producto con id: ${id} no existe en el inventario.`);
+        if (product == null) {
+            throw new Error(`El producto con id: ${product.getId()} no existe en el inventario.`);
         }
 
-        return producto;
+        return product;
     }
 
-    // Metodo que suma todas las cuotas a pagar del siguiente mes y corroborar que no sobrepasa el limite mensual de la tarjeta del usuario.
-    calcularPagoMensualDeTarjeta() {
-        let montoParaPagarEnSiguienteMes = 0;
-        for (let i = 0; i < this.productos.length; i++) {
-            if (!this.productos[i].estaPago()) {
-                montoParaPagarEnSiguienteMes += this.productos[i].calcularValorCuota();
+    // Method that sum all the installment values to paid on the next month, and it validates that the credit card limit is not being surpassed
+    calculateCreditCardMonthlyPayment() {
+        let valueToPayNextMonth = 0;
+        for (let i = 0; i < this.products.length; i++) {
+            if (!this.products[i].isPaid()) {
+                valueToPayNextMonth += this.products[i].calculateInstallmentValue();
             }
         }
 
-        return montoParaPagarEnSiguienteMes;
+        return valueToPayNextMonth;
     }
 
-    // Metodo que suma y retorna el precio de cada producto para que el usuario pueda ver el global de sus deudas.
-    calcularMontoTotalDeProductos() {
-        let montoTotalProductos = 0;
-        for (let i = 0; i < this.productos.length; i++) {
-            if (!this.productos[i].estaPago()) {
-                montoTotalProductos += this.productos[i].getPrecio();
+    // Method that sum and return all the products prices so the user can see how much does it have to pay
+    calculateProductsTotalValue() {
+        let productsTotalValue = 0;
+        for (let i = 0; i < this.products.length; i++) {
+            if (!this.products[i].isPaid()) {
+                productsTotalValue += this.products[i].getPrice();
             }
         }
 
-        return montoTotalProductos;
+        return productsTotalValue;
     }
 
-    // Metodo que envía sms ficticio al usuario avisando que un producto está proximo a vencer, por ahora levanta alert solamente, necesito ver como ingresar la fecha del producto.
-    avisoCuotaCercaDeVencimiento() {
-        for (const producto of this.productos) {
-            let fechaHoy = new Date();
-            if (producto.fechaVencimientoCuota != null) {
-                if (producto.getFechaVencimientoCuota >= (fechaHoy.getMonth() && fechaHoy.getDay())) {
-                    alert(`La fecha para pagar la cuota nro ${cantidadCuotasPagas + 1} de su articulo: ${producto.getNombre} vence hoy.`);
+    // This method send a fictitious sms to the user indicating that a product is close to expire
+    installmentCloseToExpireWarning() {
+        for (const product of this.products) {
+            let todayDate = new Date();
+            if (product.installmentExpirationDate != null) {
+                if (product.getInstallmentExpirationDate() >= (todayDate.getMonth() && todayDate.getDay())) {
+                    alert(`La fecha para pagar la cuota nro ${product.paidInstallments + 1} de su articulo: ${product.getName()} vence hoy.`);
                 }
             }
         }
     }
 
-    // Metodo para ordenar los productos por precio ascendente o descendente.
-    ordenarProductosPorPrecio(tipoOrden) {
-        if (tipoOrden == 'asc') {
-            this.productos.sort((a, b) => a.precio - b.precio);
-        } else if (tipoOrden == 'desc') {
-            this.productos.sort((a, b) => a.precio - b.precio);
-            this.productos.reverse();
+    // Method to order products by ascendant or descendent price
+    orderProductsByPrice(orderBy) {
+        if (orderBy === 'asc') {
+            this.products.sort((a, b) => a.price - b.price);
+        } else if (orderBy === 'desc') {
+            this.products.sort((a, b) => a.price - b.price);
+            this.products.reverse();
         } else {
-            throw new Error(`No es posible ordenar por ${tipoOrden}.`);
+            throw new Error(`No es posible ordenar por ${orderBy}.`);
         }
     }
 }
 
-// Fin declaración de Clases
+// Classes Declaration - END
 
-// Manejo de eventos
+// Utility Methods - START
 
-$('#add-product').click(() => {
-    let nombreProducto = prompt("Ingrese nombre de su producto.");
-    let precioProducto = parseFloat(prompt("Ingrese precio de su producto."));
-    let cantidadCuotas = parseInt(prompt("Ingrese la cantidad de cuotas."));
-    let fechaVencimientoCuota = new Date(2021, parseInt(prompt("Ingrese mes de vencimiento con un numero") - 1), parseInt(prompt("Ingrese dia de vencimiento con un numero")));
+const checkFormFieldsValues = () => {
+    let productName = $('#productNameInput')[0].value;
+    let productPrice = $('#productPriceInput')[0].value;
+    let installmentsQuantity = $('#installmentQuantityInput')[0].value;
+    let installmentExpirationDate = $('#installmentExpirationDate')[0].value;
 
-    inventario.agregarProducto(new Producto(nombreProducto, precioProducto, cantidadCuotas, fechaVencimientoCuota));
+    if (productName != '' && productPrice != '' && installmentsQuantity != '' && installmentExpirationDate != ''){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const disableSubmitButtonOnInputChange = (locator) => {
+    $(`#${locator}`).on('input change', () => {
+        if (checkFormFieldsValues()){
+            $('#addProductSubmitButton').prop('disabled', false);
+        } else {
+            $('#addProductSubmitButton').prop('disabled', true);
+        }
+    });
+}
+
+// Utility Methods - END
+
+// Events Handler - START
+
+$('#addProductModal').on('hidden.bs.modal', () => {
+    $('#productNameInput')[0].value = '';
+    $('#productPriceInput')[0].value = '';
+    $('#installmentQuantityInput')[0].value = '';
+    $('#installmentExpirationDate')[0].value = '';
+
+    $('#addProductSubmitButton').prop('disabled', true);
+});
+
+disableSubmitButtonOnInputChange('productNameInput');
+disableSubmitButtonOnInputChange('productPriceInput');
+disableSubmitButtonOnInputChange('installmentQuantityInput');
+disableSubmitButtonOnInputChange('installmentExpirationDate');
+
+$('#addProductSubmitButton').click(() => {
+    let productName = $('#productNameInput')[0].value;
+    let productPrice = $('#productPriceInput')[0].value;
+    let installmentsQuantity = $('#installmentQuantityInput')[0].value;
+    let installmentExpirationDate = $('#installmentExpirationDate')[0].value;
+
+    inventory.addProduct(new Product(productName, productPrice, installmentsQuantity, installmentExpirationDate));
 
     const closeButtons = $('.product__close');
 
@@ -233,19 +290,23 @@ $('#add-product').click(() => {
             let parentId = parseInt(closeButton.parentNode.id);
             let elem = $(`#${parentId}`)[0];
             elem.parentNode.removeChild(elem);
-            inventario.borrarProducto(parentId);
+            inventory.deleteProduct(parentId);
         });
     }
+
 });
 
-// Manejo de eventos
+// Events Handler - END
 
-// Sección para probar
+// Test Section - START
 
-let nombreUsuario = prompt("Ingrese su nombre...");
-let title = $(".home__title");
-title[0].textContent = `Bienvenido el día de hoy, ${nombreUsuario}!`;
+let userName = prompt("Ingrese su nombre...");
+let title = $(".home__main--title")[0];
+title.textContent = `Bienvenido el día de hoy, ${userName}!`;
 
-const inventario = new Inventario(parseInt(prompt("Ingrese el limite mensual de su tarjeta.")));
+$('.home__main--title').hide().fadeIn('slow');
 
-// Sección para probar
+// const inventory = new Inventory(parseInt(prompt("Ingrese el limite mensual de su tarjeta.")));
+const inventory = new Inventory(1000);
+
+// Test Section - END

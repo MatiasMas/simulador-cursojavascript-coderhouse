@@ -1,50 +1,53 @@
 * {
-    margin: 0px;
-    padding: 0px;
-}
+  margin: 0;
+  padding: 0; }
 
-.home__title {
-    font-size: 50px;
-    margin-top: 20px;
-    margin-left: 50px;
-}
+.home__main--title {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: beige; }
 
 .home__main__products {
-    margin: 50px;
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-}
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.17);
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap; }
 
 .product {
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 200px;
-    height: 250px;
-    font-size: 17px;
-    border-radius: 2px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.product__img {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 200px;
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  flex-direction: column; }
+  .product__img {
     display: inline-block;
     height: 60%;
-    width: 100%;
-}
-
-.product__info {
-    padding: 7px;
+    width: 100%; }
+  .product__info {
+    margin: 0;
+    padding: 10px;
     text-transform: capitalize;
     height: 40%;
-}
-
-.product__title {
-    font-weight: bold;
-}
-
-.product__close {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+    .product__info--title {
+      margin: 0;
+      font-weight: bold;
+      margin-bottom: 5px; }
+    .product__info--price {
+      margin: 0;
+      margin-bottom: 5px; }
+    .product__info--monthlyFee {
+      margin: 0;
+      margin-bottom: 5px; }
+    .product__info--feeNumber {
+      margin: 0;
+      margin-bottom: 5px; }
+  .product__close {
     padding: 4px;
     position: absolute;
-    right: 0;
-}
+    right: 0; }

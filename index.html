@@ -4,18 +4,60 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <title>Gester | Gestiona tus gastos!</title>
 </head>
-<body class="home">
-    <h1 class="home__title"></h1>
+<body class="container home">
 
     <header class="home__header">
 
     </header>
 
     <main class="home__main">
-        <button id="add-product">Añadir producto</button>
+        <h1 class="home__main--title"></h1>
+
+        <!-- Button trigger modal -->
+        <button id="add-product" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            Add Product
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="addProductForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addProductModalTitle">Add Product</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="productNameInput" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" id="productNameInput" aria-describedby="productName">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="productPriceInput" class="form-label">Product Price</label>
+                                    <input type="number" class="form-control" id="productPriceInput">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="installmentQuantityInput" class="form-label">Installment Quantity</label>
+                                    <input type="number" class="form-control" id="installmentQuantityInput">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="installmentExpirationDate" class="form-label">Installment Expiration Date</label>
+                                    <input type="date" class="form-control" id="installmentExpirationDate">
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button id="addProductSubmitButton" type="button" class="btn btn-primary" data-bs-dismiss="modal" disabled>Save Product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="home__main__products">
 
         </div>
@@ -24,8 +66,11 @@
     <footer class="home__footer">
 
     </footer>
-    
+
+    <!-- Imports -->
     <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

@@ -13,3 +13,4 @@ Change log:
 -   0.3.0 : Se añadió css para manejar el html dinámico que es agregado al agregarse un producto, esto se hace usando clases.
 -   0.3.1 : Uso de event listeners para añadir productos y borrado de los mismos.
 -   0.4.0 : Uso de npm para instalar jquery, se reemplazaron todos los usos de document.findElement... por notaciones Jquery.
+-   0.4.1 : Se reemplazó el uso de prompts por un formulario dentro de un modal, se añadió bootstrap, se agregaron un par de animaciones provisorias.
