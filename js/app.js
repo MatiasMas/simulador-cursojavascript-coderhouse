@@ -140,22 +140,6 @@ class Inventory {
             </div>
             `
         );
-
-        $(`#${product.getId()}`)
-            .hide()
-            .fadeIn('slow')
-            .animate({
-                opacity: 0.5,
-                height: "+=20",
-                width: "+=20"
-            }, 1000, () => {
-                $(`#${product.getId()}`)
-                    .animate({
-                        opacity: 1,
-                        height: "-=20",
-                        width: "-=20"
-                    }, 1000, () => {})
-            });
     }
 
     // Deletes a product from the inventory
@@ -308,5 +292,18 @@ $('.home__main--title').hide().fadeIn('slow');
 
 // const inventory = new Inventory(parseInt(prompt("Ingrese el limite mensual de su tarjeta.")));
 const inventory = new Inventory(1000);
+
+$('#test-pokemon').click(() => {
+    $.ajax({
+        method: "GET",
+        url:  "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20",
+        success: function(response){
+            for (const pokemon of response.results) {
+                $("#test-ajax").append(`<p><pre>The Pokémon name is:</pre> <strong>${pokemon.name}</strong>.</p>`);
+            }
+        }
+    });
+});
+
 
 // Test Section - END
