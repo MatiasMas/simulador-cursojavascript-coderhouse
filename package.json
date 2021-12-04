@@ -20,7 +20,10 @@
   "homepage": "https://github.com/MatiasMas/simulador-cursojavascript-coderhouse#readme",
   "dependencies": {
     "bootstrap": "^5.1.3",
+    "hover.css": "^2.3.2",
     "jquery": "^3.6.0",
+    "jquery-ui": "^1.13.0",
+    "magic.css": "^1.4.7",
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.15",
     "popper.js": "^1.16.1"

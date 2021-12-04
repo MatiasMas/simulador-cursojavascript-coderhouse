@@ -4,19 +4,25 @@
 
 .home__main--title {
   margin-top: 30px;
-  margin-bottom: 30px;
-  background-color: beige; }
+  margin-bottom: 30px; }
 
 .home__main__products {
   margin-top: 10px;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.17);
   display: flex;
   gap: 15px;
   flex-wrap: wrap; }
+  .home__main__products__expired-products {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; }
+  .home__main__products__paid-products {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; }
 
 .product {
-  background-color: rgba(0, 0, 0, 0.5);
   width: 200px;
   border-radius: 2px;
   position: relative;
@@ -24,30 +30,32 @@
   flex-direction: column; }
   .product__img {
     display: inline-block;
+    padding: 30px;
     height: 60%;
     width: 100%; }
   .product__info {
-    margin: 0;
-    padding: 10px;
     text-transform: capitalize;
-    height: 40%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; }
-    .product__info--title {
-      margin: 0;
-      font-weight: bold;
-      margin-bottom: 5px; }
-    .product__info--price {
-      margin: 0;
-      margin-bottom: 5px; }
-    .product__info--monthlyFee {
-      margin: 0;
-      margin-bottom: 5px; }
-    .product__info--feeNumber {
-      margin: 0;
-      margin-bottom: 5px; }
   .product__close {
     padding: 4px;
     position: absolute;
     right: 0; }
+
+.infoBox {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: rgba(211, 211, 211, 0.63);
+  margin-top: 10px;
+  border-radius: 2px;
+  border: 2px solid rgba(128, 128, 128, 0.45);
+  align-items: center; }
+  .infoBox div {
+    width: 50%;
+    display: flex;
+    flex-direction: column; }
+    .infoBox div p {
+      margin: 0;
+      padding: 8px; }

@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/magic.css/dist/magic.css">
+    <link rel="stylesheet" href="node_modules/hover.css/css/hover-min.css">
     <link rel="stylesheet" href="css/styles.css">
     <title>Gester | Gestiona tus gastos!</title>
 </head>
@@ -15,14 +17,60 @@
     </header>
 
     <main class="home__main">
-        <h1 class="home__main--title"></h1>
+        <h1 class="home__main--title">Welcome to Gester!</h1>
+        <div class="mb-31">
+            <p>An easy app to manage those items that were bought on plans!</p>
+            <h2>How does it work?</h2>
+            <p>Just set your credit card limit and add your products, the system will show you if your limit is being surpassed by your products.</p>
+            <p>Remember to check your <strong>Expired Products</strong> section since those items needs to be paid urgent!</p>
+        </div>
 
         <!-- Button trigger modal -->
-        <button id="add-product" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-            Add Product
-        </button>
+        <div class="mb-3">
+            <button id="add-product" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                Add Product
+            </button>
+            <button id="change-creditcardvalue" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#setLimitModal">
+                Set Limit
+            </button>
+        </div>
 
-        <!-- Modal -->
+        <div class="infoBox">
+            <div>
+                <p>Monthly Credit Card Limit: <span id="card-limit-display">0</span></p>
+                <p id="item-to-expire-display"></p>
+            </div>
+            <div>
+                <p id="total-display"></p>
+                <p>Number of Products to be Paid: <span id="number-display"></span></p>
+            </div>
+        </div>
+
+        <!-- Modal Credit Card Limit -->
+        <div class="modal fade" id="setLimitModal" tabindex="-1" aria-labelledby="setLimitModalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="setLimitForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="setLimitModalTitle">Set New Credit Card Limit</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="newLimitInput" class="form-label">Monthly Credit Card Limit</label>
+                                <input type="number" class="form-control" id="newLimitInput">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button id="setLimitSubmitButton" type="button" class="btn btn-primary" data-bs-dismiss="modal" disabled>Save Limit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Add Product -->
         <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalTitle" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -35,6 +83,15 @@
                                 <div class="mb-3">
                                     <label for="productNameInput" class="form-label">Product Name</label>
                                     <input type="text" class="form-control" id="productNameInput" aria-describedby="productName">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categorySelector" class="form-label">Product Category</label>
+                                    <select id="categorySelector" class="form-select" aria-label="Default select example">
+                                        <option value="none" selected disabled>Select a category...</option>
+                                        <option value="cloth">Cloth</option>
+                                        <option value="shoes">Shoes</option>
+                                        <option value="electronics">Electronics</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="productPriceInput" class="form-label">Product Price</label>
@@ -58,13 +115,76 @@
             </div>
         </div>
 
-        <div class="home__main__products">
+        <!-- Modal for each product -->
 
-        </div>
-        <button id="test-pokemon" type="button" class="btn btn-secondary mt-2">Ajax Call</button>
-        <div id="test-ajax" class="mt-2 text-capitalize">
+        <!-- Modal -->
+        <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">Update Product Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="productInformation" class="modal-body">
 
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="payInstallment" type="button" class="btn btn-success" data-bs-dismiss="modal">Pay Installment</button>
+                        <button id="updateProductSubmit" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- Accordion -->
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button current-section" type="button" data-bs-toggle="collapse" data-bs-placement="right" title="Here you will see your current products to be paid." data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Current Products
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="home__main__products">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed expire-section" type="button" data-bs-toggle="collapse" data-bs-placement="right" title="Items that surpassed the installment payment date are here." data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Expired Products
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="home__main__products__expired-products">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed paid-section" type="button" data-bs-toggle="collapse" data-bs-placement="right" title="Products that were already paid are here." data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Paid Products
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="home__main__products__paid-products">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <footer class="home__footer">

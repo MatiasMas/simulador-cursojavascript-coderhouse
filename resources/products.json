@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Lavadora James W300",
+    "productCategory": "electronics",
+    "price": 20000,
+    "installmentsQuantity": 12,
+    "installmentExpirationDate": "2022-01-11",
+    "paidInstallments": 4,
+    "paid": false,
+    "expiredInstallment": false
+  },
+  {
+    "name": "Adidas UFO 13",
+    "productCategory": "shoes",
+    "price": 1500,
+    "installmentsQuantity": 3,
+    "installmentExpirationDate": "2022-01-20",
+    "paidInstallments": 1,
+    "paid": false,
+    "expiredInstallment": false
+  },
+  {
+    "name": "T-Shirt Incredibles",
+    "productCategory": "cloth",
+    "price": 300,
+    "installmentsQuantity": 1,
+    "installmentExpirationDate": "2022-01-10",
+    "paidInstallments": 1,
+    "paid": true,
+    "expiredInstallment": false
+  },
+  {
+    "name": "Wallet Cepri",
+    "productCategory": "cloth",
+    "price": 1000,
+    "installmentsQuantity": 4,
+    "installmentExpirationDate": "2022-03-01",
+    "paidInstallments": 2,
+    "paid": false,
+    "expiredInstallment": true
+  },
+  {
+    "name": "Bicycle Ergo 2",
+    "productCategory": "electronics",
+    "price": 3500,
+    "installmentsQuantity": 6,
+    "installmentExpirationDate": "2022-02-15",
+    "paidInstallments": 5,
+    "paid": false,
+    "expiredInstallment": true
+  },
+  {
+    "name": "Xiaomi Redmi Note 10s",
+    "productCategory": "electronics",
+    "price": 12000,
+    "installmentsQuantity": 12,
+    "installmentExpirationDate": "2022-01-05",
+    "paidInstallments": 8,
+    "paid": false,
+    "expiredInstallment": false
+  },
+  {
+    "name": "Air Conditioner 320",
+    "productCategory": "electronics",
+    "price": 8000,
+    "installmentsQuantity": 6,
+    "installmentExpirationDate": "2022-04-02",
+    "paidInstallments": 0,
+    "paid": false,
+    "expiredInstallment": false
+  },
+  {
+    "name": "Dry Washer",
+    "productCategory": "electronics",
+    "price": 4000,
+    "installmentsQuantity": 4,
+    "installmentExpirationDate": "2022-03-12",
+    "paidInstallments": 3,
+    "paid": false,
+    "expiredInstallment": false
+  }
+]
